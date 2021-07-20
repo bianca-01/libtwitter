@@ -1,3 +1,19 @@
+Metadata-Version: 2.1
+Name: libtwitter
+Version: 0.0.7
+Summary: Pacote para pesquisar e processar tweets
+Home-page: https://github.com/bianca-01/libtwitter
+Author: Bianca Soares, Joanny Pacheco
+Author-email: biancasousa439@gmail.com
+License: UNKNOWN
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
 LibTwitter
 ==========
 
@@ -80,3 +96,4 @@ Os métodos *remover_emojis* e *remover_caracteres* permitem salvar os resultado
 df = my_twitter.remover_caracteres(dataframe,['@','_','#'])
 df2 = my_twitter.remover_emojis(dataframe)
 ```
+

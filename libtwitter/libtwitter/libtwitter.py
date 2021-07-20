@@ -64,13 +64,13 @@ class Twitter:
       print("Erro")
       return False
 
-  def pesquisar_tweets(self,palavra,qnt=500,salvar=0,namefile='result.csv'):
+  def pesquisar_tweets(self,query,qnt=500,save=False,namefile='result.csv'):
     try:
-      query_codificada = urllib.parse.quote(palavra)
+      query_codificada = urllib.parse.quote(query)
       result = dict()
       result['usuario'] = []
       result['tweet'] = []
-      result['date'] = []
+      result['data'] = []
       result['linguagem'] = []
       result['qnt_retweet'] = []
       c = 0
@@ -83,33 +83,58 @@ class Twitter:
           c+=1
         decodificar = requisicao[1].decode()
         objeto = json.loads(decodificar)
-        print(objeto)
+        #print(objeto)
         tweets = objeto['statuses']
         for twt in tweets:
           result['usuario'].append((twt['user']['screen_name']))
           result['tweet'].append(twt['text'])
-          result['date'].append(twt['created_at'])
+          result['data'].append(twt['created_at'])
           result['linguagem'].append(twt['lang'])
           result['qnt_retweet'].append(twt["retweet_count"])
-      
+          
       df_result = pd.DataFrame(result).iloc[:qnt]
-      if salvar==1:
+      if save:
         df_result.to_csv(namefile)
       return df_result
     except:
       print('Erro')
 
-  def nuvem_de_palavras(self,tweets,nameimg='wordcloud.png'):
-    wordcloud = WordCloud(
-    width = 750,
-    height = 500,
-    background_color = 'white').generate(str(tweets))
-    fig = plt.figure(
-    figsize = (40, 30),
-    facecolor = 'k',
-    edgecolor = 'k')
-    plt.imshow(wordcloud, interpolation = 'bilinear')
-    plt.axis('off')
-    plt.tight_layout(pad=0)
-    plt.savefig(nameimg,format='png')
-    plt.show()
+  def nuvem_de_palavras(self,tweets,nameimg='wordcloud.png',w=750,h=500):
+    try:
+      wordcloud = WordCloud(
+      width = w,
+      height = h,
+      background_color = 'white').generate(str(tweets))
+      fig = plt.figure(
+      figsize = (40, 30),
+      facecolor = 'k',
+      edgecolor = 'k')
+      plt.imshow(wordcloud, interpolation = 'bilinear')
+      plt.axis('off')
+      plt.tight_layout(pad=0)
+      plt.savefig(nameimg,format='png')
+      plt.show()
+    except:
+      print('Erro')
+
+  def remover_emojis(self,dataframe,save=False,namefile='df_no_emoji.csv'):
+    try:
+      df = dataframe.astype(str).apply(lambda x: x.str.encode('ascii', 'ignore').str.decode('ascii'))
+      if save:
+        df.to_csv(namefile)
+      return df
+    except:
+      print('Erro')
+
+  def remover_caracteres(self,dataframe,lista,save=False,namefile='dataframe.csv'):
+    try:
+      if type(dataframe)==pd.core.frame.DataFrame:
+        for l in lista:
+          dataframe.replace({l:''},regex=True,inplace=True)
+        df = dataframe
+        if save:
+          df.to_csv(namefile)
+        return df
+    except:
+      print('Erro')
+    

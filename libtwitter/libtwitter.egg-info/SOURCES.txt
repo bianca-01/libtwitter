@@ -1,0 +1,11 @@
+LICENSE
+README.md
+pyproject.toml
+setup.cfg
+libtwitter/libtwitter/__init__.py
+libtwitter/libtwitter/libtwitter.py
+libtwitter/libtwitter.egg-info/PKG-INFO
+libtwitter/libtwitter.egg-info/SOURCES.txt
+libtwitter/libtwitter.egg-info/dependency_links.txt
+libtwitter/libtwitter.egg-info/requires.txt
+libtwitter/libtwitter.egg-info/top_level.txt
